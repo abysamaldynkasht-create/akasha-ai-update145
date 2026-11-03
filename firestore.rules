@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'abysamaldynkasht@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    match /files/{fileId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    
+    match /admins/{adminId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

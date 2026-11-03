@@ -1,0 +1,24 @@
+{
+  "entities": {
+    "File": {
+      "title": "File",
+      "description": "Represents a file uploaded by an admin to be searchable by a client.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "code": { "type": "string", "minLength": 1, "maxLength": 50 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "fileData": { "type": "string", "maxLength": 1000000 },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "name", "code", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/files/{fileId}": {
+      "schema": "File",
+      "description": "Stores files uploaded by admin, searchable by code."
+    }
+  }
+}
